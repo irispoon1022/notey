@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/notes")
@@ -23,8 +25,10 @@ public class NotesController {
     }
 
     @GetMapping("/test")
-    public String getTest(){
-        return "Hello";
+    public Map<String, String> getTest(){
+        Map<String, String> response = new HashMap<>();
+        response.put("data", "Hello");
+        return response;
     }
     //create a new note
     @PostMapping
