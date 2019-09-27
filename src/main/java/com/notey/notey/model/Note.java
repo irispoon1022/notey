@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+/* @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) */
+@Table(name = "quotes")
 
 public class Note
 {
@@ -18,6 +19,17 @@ public class Note
 
     private String content;
 
+    private String author;
+
+    private String from;
+
+    private String web;
+
+    private String date;
+
+    public Long getId() {
+        return id;
+    }
 
     public String getTitle() {
         return title;
@@ -27,16 +39,30 @@ public class Note
         return content;
     }
 
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public String getWeb() {
+        return web;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+
     public void setTitle(String title) {
         this.title = title;
     }
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public void setId(Long id) {
