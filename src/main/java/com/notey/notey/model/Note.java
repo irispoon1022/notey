@@ -3,29 +3,44 @@ package com.notey.notey.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.Collection;
+
+import org.hibernate.annotations.Columns;
+// import org.hibernate.annotations.Entity;
+import org.hibernate.annotations.Type;
 
 @Entity
 /* @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) */
-@Table(name = "quotes")
+@Table(name = "quotes1")
 
 public class Note
 {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
 
+    @Lob
+    @Type(type="org.hibernate.type.TextType")
+    // @Column(columnDefinition = "clob")
     private String content;
 
     private String author;
 
-    private String from;
+    private String book;
 
     private String web;
 
     private String date;
+/*
+    @JoinTable(name = "up-down", joinColumns = {
+            @JoinColumn(name = "up", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
+            @JoinColumn(name = "down", referencedColumnName = "id", nullable = false)})
+    @ManyToMany
+    private Collection<Note> downnote;
+*/
 
     public Long getId() {
         return id;
@@ -44,8 +59,8 @@ public class Note
         return author;
     }
 
-    public String getFrom() {
-        return from;
+    public String getBook() {
+        return book;
     }
 
     public String getWeb() {
@@ -67,6 +82,22 @@ public class Note
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setBook(String book) {
+        this.book = book;
+    }
+
+    public void setWeb(String web) {
+        this.web = web;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
 }
