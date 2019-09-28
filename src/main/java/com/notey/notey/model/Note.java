@@ -4,9 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
-import org.hibernate.annotations.Columns;
-// import org.hibernate.annotations.Entity;
 import org.hibernate.annotations.Type;
 
 @Entity
@@ -24,7 +23,7 @@ public class Note
 
     @Lob
     @Type(type="org.hibernate.type.TextType")
-    // @Column(columnDefinition = "clob")
+
     private String content;
 
     private String author;
@@ -34,13 +33,12 @@ public class Note
     private String web;
 
     private String date;
-/*
-    @JoinTable(name = "up-down", joinColumns = {
+
+    @JoinTable(name = "up_down", joinColumns = {
             @JoinColumn(name = "up", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
             @JoinColumn(name = "down", referencedColumnName = "id", nullable = false)})
     @ManyToMany
-    private Collection<Note> downnote;
-*/
+    private List<Note> downnote;
 
     public Long getId() {
         return id;
@@ -98,6 +96,14 @@ public class Note
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public List<Note> getDownnote() {
+        return downnote;
+    }
+
+    public void setDownnote(List<Note> downnote) {
+        this.downnote = downnote;
     }
 
 }
