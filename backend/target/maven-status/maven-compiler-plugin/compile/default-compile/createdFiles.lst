@@ -1,0 +1,4 @@
+com/notey/notey/repositories/NoteRepository.class
+com/notey/notey/model/Note.class
+com/notey/notey/NoteyApplication.class
+com/notey/notey/controllers/NotesController.class
