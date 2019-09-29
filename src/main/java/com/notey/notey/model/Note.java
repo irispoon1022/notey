@@ -1,6 +1,6 @@
 package com.notey.notey.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -11,7 +11,7 @@ import org.hibernate.annotations.Type;
 @Entity
 /* @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) */
 @Table(name = "quotes1")
-
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 public class Note
 {
 
@@ -39,6 +39,9 @@ public class Note
             @JoinColumn(name = "down", referencedColumnName = "id", nullable = false)})
     @ManyToMany
     private List<Note> downnote;
+    
+    @ManyToMany(mappedBy = "downnote")
+    private List<Note> upnote;
 
     public Long getId() {
         return id;
@@ -104,6 +107,14 @@ public class Note
 
     public void setDownnote(List<Note> downnote) {
         this.downnote = downnote;
+    }
+
+    public List<Note> getUpnote() {
+        return upnote;
+    }
+
+    public void setUpnote(List<Note> upnote) {
+        this.upnote = upnote;
     }
 
 }
