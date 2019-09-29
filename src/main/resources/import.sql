@@ -1,1 +1,0 @@
-INSERT INTO note (id, title,content) VALUES (1, 'one', 'lalala');
