@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/notes")
@@ -24,22 +21,25 @@ public class NotesController {
         return notes;
     }
 
+    //create a new note
+    @PostMapping
+    public Note createNote(@RequestBody Note note){
+        return noteRepository.save(note);
+    }
+
+    //get a note by {id}
+    @GetMapping("/{id}")
+    public Note getNote(@PathVariable long id){
+        Optional<Note> note= noteRepository.findById(id);
+        return note.get();
+    }
+
+    // API test endpoint
     @GetMapping("/test")
     public Map<String, String> getTest(){
         Map<String, String> response = new HashMap<>();
         response.put("data", "Hello");
         return response;
     }
-    //create a new note
-    @PostMapping
-    @ResponseStatus(HttpStatus.OK)
-    public void createNote(@RequestBody Note note){
 
-    }
-
-    //get a note by {id}
-    @GetMapping("/{id}")
-    public Note getNoteById(@PathVariable("id") long id) {
-        return new Note();
-    }
 }
