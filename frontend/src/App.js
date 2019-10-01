@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
+import Button from "@material-ui/core/Button";
+import SearchAppBar from "./SearchAppBar";
 
 class App extends Component {
   constructor(props) {
@@ -24,6 +26,7 @@ class App extends Component {
     const { isLoading, data } = this.state;
     return (
       <React.Fragment>
+        <SearchAppBar />
         {!isLoading ? (
           data.map(datum => {
             const { id, content, upnote, downnote } = datum;
@@ -35,7 +38,12 @@ class App extends Component {
                 <p>{id}</p>
                 <p>{content}</p>
                 {(Array.isArray(downnote) && downnote.length) > 0 &&
-                  downnote.map(downnotea => <p>downnote:{downnotea.content}</p>)}
+                  downnote.map(downnotea => (
+                    <p>downnote:{downnotea.content}</p>
+                  ))}
+                <Button variant="contained" color="primary">
+                  Hello World
+                </Button>
                 <hr />
               </div>
             );
