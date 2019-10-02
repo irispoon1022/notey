@@ -40,6 +40,7 @@ public class Note
     private List<Note> downnote;
     
     @ManyToMany(mappedBy = "downnote")
+    @JsonSerialize(using = CustomListSerializer.class)
     private List<Note> upnote;
 
     public Long getId() {
