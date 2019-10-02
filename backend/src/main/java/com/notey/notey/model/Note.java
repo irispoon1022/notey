@@ -1,17 +1,15 @@
 package com.notey.notey.model;
 
-import com.fasterxml.jackson.annotation.*;
-
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.Type;
 
 @Entity
 /* @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) */
 @Table(name = "quotes1")
-@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
+//@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 public class Note
 {
 
@@ -38,6 +36,7 @@ public class Note
             @JoinColumn(name = "up", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
             @JoinColumn(name = "down", referencedColumnName = "id", nullable = false)})
     @ManyToMany
+    @JsonSerialize(using = CustomListSerializer.class)
     private List<Note> downnote;
     
     @ManyToMany(mappedBy = "downnote")
