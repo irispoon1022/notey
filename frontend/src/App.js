@@ -1,9 +1,46 @@
 import React, { Component } from "react";
 import "./App.css";
-import Button from "@material-ui/core/Button";
 import SearchAppBar from "./SearchAppBar";
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+
+const animalsList = [
+  {
+    id: 1,
+    value: "Tiger"
+  },
+  {
+    id: 2,
+    value: "Lion"
+  },
+  {
+    id: 3,
+    value: "Dog"
+  },
+  {
+    id: 4,
+    value: "Cat"
+  }
+];
+
+// generage select dropdown option list dynamically
+function Options({ options }) {
+  return options.map(option => (
+    <option key={option.id} value={option.value}>
+      {option.value}
+    </option>
+  ));
+}
+// const useStyles = makeStyles(theme => ({
+//   root: {
+//     padding: theme.spacing(3, 2),
+//   },
+// }));
+
+// const classes = useStyles();
 
 class App extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -22,29 +59,30 @@ class App extends Component {
         });
       });
   }
+
   render() {
     const { isLoading, data } = this.state;
     return (
       <React.Fragment>
         <SearchAppBar />
+        {/* <select name="animal">
+          <Options options={animalsList} />
+        </select> */}
         {!isLoading ? (
           data.map(datum => {
             const { id, content, upnote, downnote } = datum;
 
             return (
               <div key={id}>
-                {(Array.isArray(upnote) && upnote.length) > 0 &&
-                  upnote.map(upnotea => <p>upnote:{upnotea.content}</p>)}
-                <p>{id}</p>
+                <Paper style={{padding: 30, margin:20}}>
                 <p>{content}</p>
+                {(Array.isArray(upnote) && upnote.length) > 0 &&
+                  upnote.map(upnotea => <p>Can be explained by: {upnotea}</p>)}
                 {(Array.isArray(downnote) && downnote.length) > 0 &&
                   downnote.map(downnotea => (
-                    <p>downnote:{downnotea.content}</p>
+                    <p>Related example: {downnotea}</p>
                   ))}
-                <Button variant="contained" color="primary">
-                  Hello World
-                </Button>
-                <hr />
+                </Paper>
               </div>
             );
           })
