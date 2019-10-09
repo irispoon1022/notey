@@ -30,8 +30,9 @@ HELP.md
 .vscode/
 
 ###target###
-target/
+backend/target/
 *.class
 *.war
 *.jar
 *.war.original
+*.lst
