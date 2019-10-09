@@ -28,3 +28,10 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+
+###target###
+target/
+*.class
+*.war
+*.jar
+*.war.original
