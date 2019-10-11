@@ -44,7 +44,9 @@ class App extends Component {
     super(props);
     this.state = {
       isLoading: true,
-      data: []
+      data: [],
+      ruleIsLoading:true,
+      rulenotes:[],
     };
   }
 
@@ -57,10 +59,20 @@ class App extends Component {
           isLoading: false
         });
       });
+
+      fetch("http://localhost:8080/api/v1/notes/rulenotes")
+      .then(response => response.json())
+      .then(body => {
+        this.setState({
+          rulenotes: body,
+          ruleIsLoading:false
+        });
+      });
+
   }
 
   render() {
-    const { isLoading, data } = this.state;
+    const { isLoading, data ,rulenotes, ruleIsLoading} = this.state;
     return (
       <React.Fragment>
         
@@ -69,6 +81,14 @@ class App extends Component {
         <select name="animal">
           <Options options={animalsList} />
         </select>
+        {!ruleIsLoading ? (
+          rulenotes.map (rulenote => {
+            return(
+            <p>{rulenote.content}</p>)
+          })
+        ) : (
+          <p>loading</p>
+          )}
 
         {!isLoading ? (
           data.map(datum => {
