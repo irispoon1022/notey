@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
-import SearchAppBar from "./SearchAppBar";
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+import SearchAppBar from "./SearchAppBar/SearchAppBar";
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
 
 const animalsList = [
   {
@@ -40,7 +40,6 @@ function Options({ options }) {
 // const classes = useStyles();
 
 class App extends Component {
-  
   constructor(props) {
     super(props);
     this.state = {
@@ -64,24 +63,29 @@ class App extends Component {
     const { isLoading, data } = this.state;
     return (
       <React.Fragment>
+        
         <SearchAppBar />
-        {/* <select name="animal">
+
+        <select name="animal">
           <Options options={animalsList} />
-        </select> */}
+        </select>
+
         {!isLoading ? (
           data.map(datum => {
             const { id, content, upnote, downnote } = datum;
 
             return (
               <div key={id}>
-                <Paper style={{padding: 30, margin:20}}>
-                <p>{content}</p>
-                {(Array.isArray(upnote) && upnote.length) > 0 &&
-                  upnote.map(upnotea => <p>Can be explained by: {upnotea}</p>)}
-                {(Array.isArray(downnote) && downnote.length) > 0 &&
-                  downnote.map(downnotea => (
-                    <p>Related example: {downnotea}</p>
-                  ))}
+                <Paper style={{ padding: 30, margin: 20 }}>
+                  <p>{content}</p>
+                  {(Array.isArray(upnote) && upnote.length) > 0 &&
+                    upnote.map(upnotea => (
+                      <p>Can be explained by: {upnotea}</p>
+                    ))}
+                  {(Array.isArray(downnote) && downnote.length) > 0 &&
+                    downnote.map(downnotea => (
+                      <p>Related example: {downnotea}</p>
+                    ))}
                 </Paper>
               </div>
             );
