@@ -4,30 +4,12 @@ import SearchAppBar from "./SearchAppBar/SearchAppBar";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 
-const animalsList = [
-  {
-    id: 1,
-    value: "Tiger"
-  },
-  {
-    id: 2,
-    value: "Lion"
-  },
-  {
-    id: 3,
-    value: "Dog"
-  },
-  {
-    id: 4,
-    value: "Cat"
-  }
-];
 
 // generage select dropdown option list dynamically
-function Options({ options }) {
+function Options( {options} ) {
   return options.map(option => (
-    <option key={option.id} value={option.value}>
-      {option.value}
+    <option key={option.id} content={option.content}>
+      {option.content}
     </option>
   ));
 }
@@ -73,14 +55,15 @@ class App extends Component {
 
   render() {
     const { isLoading, data ,rulenotes, ruleIsLoading} = this.state;
+    
     return (
       <React.Fragment>
         
         <SearchAppBar />
-
-        <select name="animal">
-          <Options options={animalsList} />
+         <select name="animal">
+          <Options options = {!ruleIsLoading ? ( rulenotes ) : ( [] )} />
         </select>
+
         {!ruleIsLoading ? (
           rulenotes.map (rulenote => {
             return(
