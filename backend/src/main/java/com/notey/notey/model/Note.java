@@ -26,6 +26,8 @@ public class Note
 
     private String author;
 
+    private Boolean rule;
+
     private String book;
 
     private String web;
@@ -115,6 +117,14 @@ public class Note
 
     public void setUpnote(List<Note> upnote) {
         this.upnote = upnote;
+    }
+
+    public Boolean getRule() {
+        return rule;
+    }
+
+    public void setRule(Boolean rule) {
+        this.rule = rule;
     }
 
 }

@@ -35,6 +35,13 @@ public class NotesController {
         return note.get();
     }
 
+    //get rule notes
+    @GetMapping("/rulenotes")
+    public List<Note> getRuleNotes(){
+        List<Note> notes = noteRepository.findByRuleTrue();
+        return notes;
+    }
+
     // API test endpoint
     @GetMapping("/test")
     public Map<String, String> getTest(){
