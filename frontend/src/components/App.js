@@ -3,16 +3,9 @@ import "./App.css";
 import SearchAppBar from "./SearchAppBar/SearchAppBar";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import axios from 'axios';
+import axios from "axios";
+import Note from "./Note/Note";
 
-// generage select dropdown option list dynamically
-function Options({ options }) {
-  return options.map(option => (
-    <option key={option.id} content={option.content}>
-      {option.content}
-    </option>
-  ));
-}
 // const useStyles = makeStyles(theme => ({
 //   root: {
 //     padding: theme.spacing(3, 2),
@@ -33,25 +26,27 @@ class App extends Component {
   }
 
   componentDidMount() {
-
-        axios.get('http://localhost:8080/api/v1/notes')
-        .then(response => {
-          this.setState(
-            {data: response.data,
-            isLoading: false
-            });
-        })
-        .catch(error => console.log(error))
-
-      axios.get('http://localhost:8080/api/v1/notes/rulenotes')
+    axios
+      .get("http://localhost:8080/api/v1/notes")
       .then(response => {
-        this.setState(
-          {rulenotes: response.data,
-            ruleIsLoading: false
-          });
+        this.setState({ data: response.data, isLoading: false });
       })
-      .catch(error => console.log(error))
+      .catch(error => console.log(error));
+
+    axios
+      .get("http://localhost:8080/api/v1/notes/rulenotes")
+      .then(response => {
+        this.setState({ rulenotes: response.data, ruleIsLoading: false });
+      })
+      .catch(error => console.log(error));
   }
+  handleDelete = id => {
+    axios.delete(`http://localhost:8080/api/v1/notes/${id}`).then(res => {
+      console.log(res);
+      console.log(res.data);
+    });
+  };
+  handleMarkRule = id => {};
 
   render() {
     const { isLoading, data, rulenotes, ruleIsLoading } = this.state;
@@ -59,27 +54,22 @@ class App extends Component {
     return (
       <React.Fragment>
         <SearchAppBar />
-
         {!isLoading ? (
           data.map(datum => {
             const { id, content, upnote, downnote } = datum;
 
             return (
               <div key={id}>
-                <Paper style={{ padding: 30, margin: 20 }}>
-                  <select name="animal">
-                    <Options options={!ruleIsLoading ? rulenotes : []} />
-                  </select>
-                  <p>{content}</p>
-                  {(Array.isArray(upnote) && upnote.length) > 0 &&
-                    upnote.map(upnotea => (
-                      <p>Can be explained by: {upnotea}</p>
-                    ))}
-                  {(Array.isArray(downnote) && downnote.length) > 0 &&
-                    downnote.map(downnotea => (
-                      <p>Related example: {downnotea}</p>
-                    ))}
-                </Paper>
+                <Note
+                  id={id}
+                  content={content}
+                  upnote={upnote}
+                  downnote={downnote}
+                  ruleIsLoading={ruleIsLoading}
+                  rulenotes={rulenotes}
+                  handleDelete={this.handleDelete}
+                  handleMarkRule={this.handleMarkRule}
+                />
               </div>
             );
           })
