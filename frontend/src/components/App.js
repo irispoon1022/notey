@@ -3,10 +3,10 @@ import "./App.css";
 import SearchAppBar from "./SearchAppBar/SearchAppBar";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-
+import axios from 'axios';
 
 // generage select dropdown option list dynamically
-function Options( {options} ) {
+function Options({ options }) {
   return options.map(option => (
     <option key={option.id} content={option.content}>
       {option.content}
@@ -27,51 +27,38 @@ class App extends Component {
     this.state = {
       isLoading: true,
       data: [],
-      ruleIsLoading:true,
-      rulenotes:[],
+      ruleIsLoading: true,
+      rulenotes: []
     };
   }
 
   componentDidMount() {
-    fetch("http://localhost:8080/api/v1/notes")
-      .then(response => response.json())
-      .then(body => {
-        this.setState({
-          data: body,
-          isLoading: false
-        });
-      });
 
-      fetch("http://localhost:8080/api/v1/notes/rulenotes")
-      .then(response => response.json())
-      .then(body => {
-        this.setState({
-          rulenotes: body,
-          ruleIsLoading:false
-        });
-      });
+        axios.get('http://localhost:8080/api/v1/notes')
+        .then(response => {
+          this.setState(
+            {data: response.data,
+            isLoading: false
+            });
+        })
+        .catch(error => console.log(error))
 
+      axios.get('http://localhost:8080/api/v1/notes/rulenotes')
+      .then(response => {
+        this.setState(
+          {rulenotes: response.data,
+            ruleIsLoading: false
+          });
+      })
+      .catch(error => console.log(error))
   }
 
   render() {
-    const { isLoading, data ,rulenotes, ruleIsLoading} = this.state;
-    
+    const { isLoading, data, rulenotes, ruleIsLoading } = this.state;
+
     return (
       <React.Fragment>
-        
         <SearchAppBar />
-         <select name="animal">
-          <Options options = {!ruleIsLoading ? ( rulenotes ) : ( [] )} />
-        </select>
-
-        {!ruleIsLoading ? (
-          rulenotes.map (rulenote => {
-            return(
-            <p>{rulenote.content}</p>)
-          })
-        ) : (
-          <p>loading</p>
-          )}
 
         {!isLoading ? (
           data.map(datum => {
@@ -80,6 +67,9 @@ class App extends Component {
             return (
               <div key={id}>
                 <Paper style={{ padding: 30, margin: 20 }}>
+                  <select name="animal">
+                    <Options options={!ruleIsLoading ? rulenotes : []} />
+                  </select>
                   <p>{content}</p>
                   {(Array.isArray(upnote) && upnote.length) > 0 &&
                     upnote.map(upnotea => (
