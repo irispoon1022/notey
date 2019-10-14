@@ -56,19 +56,24 @@ class App extends Component {
         <SearchAppBar />
         {!isLoading ? (
           data.map(datum => {
-            const { id, content, upnote, downnote } = datum;
+            const { id, author, content, rule, date, title, web, upnote, downnote, } = datum;
 
             return (
               <div key={id}>
                 <Note
                   id={id}
+                  author={author}
                   content={content}
+                  rule={rule}
+                  date={date}
+                  title={title}
+                  web={web}
                   upnote={upnote}
                   downnote={downnote}
                   ruleIsLoading={ruleIsLoading}
                   rulenotes={rulenotes}
+
                   handleDelete={this.handleDelete}
-                  handleMarkRule={this.handleMarkRule}
                 />
               </div>
             );
