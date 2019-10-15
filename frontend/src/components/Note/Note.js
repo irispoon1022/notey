@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Paper from "@material-ui/core/Paper";
 import axios from "axios";
+import { red } from "@material-ui/core/colors";
+import './Note.css'
 
 // generage select dropdown option list dynamically
 function Options({ options }) {
@@ -15,7 +17,8 @@ class Note extends Component {
     constructor(props){
         super(props);
         this.state={
-            rule:true
+            rule:props.rule
+
         }
     }
 
@@ -53,7 +56,9 @@ class Note extends Component {
         {(Array.isArray(downnote) && downnote.length) > 0 &&
           downnote.map(downnotea => <p>Related example: {downnotea}</p>)}
         <button onClick={handleDelete.bind(this, id)}>Delete</button>
-        <button onClick={this.handleMarkRule.bind(this, id, author, content, rule, date, title, web, upnote, downnote)}>
+        <button 
+        className={this.state.rule?"buttonred":"buttongrey"}
+        onClick={this.handleMarkRule.bind(this, id, author, content, rule, date, title, web, upnote, downnote)}>
           Mark as Rule
         </button>
       </Paper>
