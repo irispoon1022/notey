@@ -18,27 +18,24 @@ class Note extends Component {
             rule:true
         }
     }
-    handleMarkRuleAPI = (id, author, content, date, title, web,) => {
-        const obj = {
-            id: {id},
-            author: {author},
-            content:{content},
-            rule: this.state.rule,
-            date:{date},
-            title:{title},
-            web:{web}
-          };
-          axios.post(`/api/v1/notes/${id}`, obj)
-              .then(res => console.log(res.data));
-        // console.log({id});
-        // console.log(`http://localhost:8080/api/v1/notes/${id}`);
 
-    }
-
-    handleMarkRule = (id, author, content, date, title, web) => {
+    handleMarkRule = (id, author, content, rule, date, title, web, upnote, downnote) => {
         this.setState((prevState => ({
             rule: !prevState.rule
-          })),this.handleMarkRuleAPI(id, author, content, date, title, web)
+          })),() => {
+              const a={
+                  id: id,
+                  author:author,
+                  content:content,
+                  rule:this.state.rule,
+                  date:date,
+                  title:title,
+                  web:web,
+                  upnote:upnote,
+                  downnote:downnote
+              }
+              axios.put(`http://localhost:8080/api/v1/notes/${id}`, a)
+          }
 
         )
     };
@@ -56,7 +53,7 @@ class Note extends Component {
         {(Array.isArray(downnote) && downnote.length) > 0 &&
           downnote.map(downnotea => <p>Related example: {downnotea}</p>)}
         <button onClick={handleDelete.bind(this, id)}>Delete</button>
-        <button onClick={this.handleMarkRule.bind(this, id, author, content, rule, date, title, web)}>
+        <button onClick={this.handleMarkRule.bind(this, id, author, content, rule, date, title, web, upnote, downnote)}>
           Mark as Rule
         </button>
       </Paper>
