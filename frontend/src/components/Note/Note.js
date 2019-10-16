@@ -3,6 +3,7 @@ import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 import { red } from "@material-ui/core/colors";
 import './Note.css'
+import ReactMarkdown from 'react-markdown';
 
 // generage select dropdown option list dynamically
 function Options({ options }) {
@@ -50,7 +51,7 @@ class Note extends Component {
         <select name="animal">
           <Options options={!ruleIsLoading ? rulenotes : []} />
         </select>
-        <p>{content}</p>
+        <ReactMarkdown escapeHtml= {false} source={content}/>
         {(Array.isArray(upnote) && upnote.length) > 0 &&
           upnote.map(upnotea => <p>Can be explained by: {upnotea}</p>)}
         {(Array.isArray(downnote) && downnote.length) > 0 &&
