@@ -15,7 +15,7 @@ public class Note
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     private String title;
 
@@ -45,7 +45,7 @@ public class Note
     @JsonSerialize(using = CustomListSerializer.class)
     private List<Note> upnote;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
@@ -83,7 +83,7 @@ public class Note
         this.content = content;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

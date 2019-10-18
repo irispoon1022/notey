@@ -3,13 +3,19 @@ package com.notey.notey.controllers;
 import com.notey.notey.model.Note;
 import com.notey.notey.repositories.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.*;
 
 @CrossOrigin(origins = { "http://localhost:3000" })
+
+
 @RestController
 @RequestMapping("/api/v1/notes")
 public class NotesController {
@@ -49,9 +55,9 @@ public class NotesController {
 
         note.setId(id);
 
-        noteRepository.save(note);
+        final Note updatedNote = noteRepository.save(note);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(updatedNote);
     }
 
     //delete a note by {id}
@@ -74,12 +80,12 @@ public class NotesController {
         return response;
     }
 
-    // API test endpoint
-    @PostMapping("/test1")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createRelationship(Integer up, Integer down) {
-        noteRepository.insertRelationship(up, down);
-        return;
+    // add upnote
+    @PostMapping("/{id}/upnote/{upnoteid}")
+    public String sayHello(@PathVariable("id") int id,@PathVariable("upnoteid") int upnoteid){
+        noteRepository.insertRelationship(id,upnoteid);
+        return "id:"+id+ "upnoteid"+upnoteid;
     }
+
 
 }
