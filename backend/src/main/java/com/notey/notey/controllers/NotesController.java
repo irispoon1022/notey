@@ -83,7 +83,7 @@ public class NotesController {
     // add upnote
     @PostMapping("/{id}/upnote/{upnoteid}")
     public String sayHello(@PathVariable("id") int id,@PathVariable("upnoteid") int upnoteid){
-        noteRepository.insertRelationship(id,upnoteid);
+        noteRepository.insertRelationship(upnoteid,id);
         return "id:"+id+ "upnoteid"+upnoteid;
     }
 
