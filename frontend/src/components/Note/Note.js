@@ -8,7 +8,7 @@ import ReactMarkdown from 'react-markdown';
 // generage select dropdown option list dynamically
 function Options({ options }) {
   return options.map(option => (
-    <option key={option.id} content={option.content}>
+    <option key={option.id} content={option.content} label={option.content} value={option.id}>
       {option.content}
     </option>
   ));
@@ -18,9 +18,10 @@ class Note extends Component {
     constructor(props){
         super(props);
         this.state={
-            rule:props.rule
-
-        }
+            rule:props.rule,
+            value:props.upnote
+        };
+        this.handleSelect=this.handleSelect.bind(this);
     }
 
     handleMarkRule = (id, author, content, rule, date, title, web, upnote, downnote) => {
@@ -42,13 +43,18 @@ class Note extends Component {
           }
 
         )
-    };
+    }
+
+   handleSelect = (id) => (event) => {
+      // this.setState({value: event.target.value},()=>{console.log(this.state.value,id)})
+      this.setState({value: event.target.value},()=>{axios.post(`http://localhost:8080/api/v1/notes/${id}/upnote/${this.state.value}`)})
+    }
 
   render() {
     const { id, author, content, rule, date, title, web, upnote, downnote, ruleIsLoading, rulenotes, handleDelete } = this.props;
     return (
       <Paper style={{ padding: 30, margin: 20 }}>
-        <select name="animal">
+        <select name="animal" value={this.state.value} onChange={this.handleSelect(id)}>
           <Options options={!ruleIsLoading ? rulenotes : []} />
         </select>
         <ReactMarkdown escapeHtml= {false} source={content}/>
