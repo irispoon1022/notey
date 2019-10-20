@@ -33,7 +33,9 @@ public class CustomListSerializer extends StdSerializer<List<Note>> {
 
         for (Note note : notes) {
             HashMap idContent = new HashMap();
-            idContent.put(note.getId(),note.getContent());
+            idContent.put("id",note.getId());
+            idContent.put("content",note.getContent());
+
             ids.add(idContent);
         }
         generator.writeObject(ids);
