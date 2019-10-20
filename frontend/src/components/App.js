@@ -21,7 +21,9 @@ class App extends Component {
       isLoading: true,
       data: [],
       ruleIsLoading: true,
-      rulenotes: []
+      rulenotes: [],
+      tagIsLoading:true,
+      tags:[],
     };
   }
 
@@ -39,6 +41,14 @@ class App extends Component {
         this.setState({ rulenotes: response.data, ruleIsLoading: false });
       })
       .catch(error => console.log(error));
+
+      axios
+      .get("http://localhost:8080/api/v1/tags")
+      .then(response => {
+        this.setState({ tags: response.data, tagIsLoading: false });
+      })
+      .catch(error => console.log(error));
+
   }
   handleDelete = id => {
     axios.delete(`http://localhost:8080/api/v1/notes/${id}`).then(res => {
@@ -49,11 +59,12 @@ class App extends Component {
   handleMarkRule = id => {};
 
   render() {
-    const { isLoading, data, rulenotes, ruleIsLoading } = this.state;
+    const { isLoading, data, rulenotes, ruleIsLoading,tags,tagIsLoading } = this.state;
 
     return (
       <React.Fragment>
         <SearchAppBar />
+        {!tagIsLoading ? (tags.map (tag => <p>{tag.name}</p>)) : (<p>Tag is loading</p>)}
         {!isLoading ? (
           data.map(datum => {
             const { id, author, content, rule, date, title, web, upnote, downnote, } = datum;
