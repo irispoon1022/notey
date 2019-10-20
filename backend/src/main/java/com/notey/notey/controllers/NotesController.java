@@ -82,10 +82,16 @@ public class NotesController {
 
     // add upnote
     @PostMapping("/{id}/upnote/{upnoteid}")
-    public String sayHello(@PathVariable("id") int id,@PathVariable("upnoteid") int upnoteid){
+    public String AddUpnote(@PathVariable("id") int id,@PathVariable("upnoteid") int upnoteid){
         noteRepository.insertRelationship(upnoteid,id);
         return "id:"+id+ "upnoteid"+upnoteid;
     }
 
+    // delete upnote
+    @DeleteMapping("/{id}/upnote/{upnoteid}")
+    public String DeleteUpnote(@PathVariable("id") int id,@PathVariable("upnoteid") int upnoteid){
+        noteRepository.deleteRelationship(upnoteid,id);
+        return "id:"+id+ "upnoteid"+upnoteid;
+    }
 
 }

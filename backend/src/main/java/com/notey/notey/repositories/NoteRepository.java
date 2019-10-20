@@ -19,5 +19,10 @@ public interface NoteRepository extends JpaRepository<Note,Integer> {
     @Transactional(rollbackFor=Exception.class)
     public void insertRelationship(@Param("upnoteid") int upnoteid, @Param("id") int id);
 
+    @Modifying
+    @Query(value = "DELETE FROM up_down WHERE up = :upnoteid AND down = :id",
+            nativeQuery = true)
+    @Transactional(rollbackFor=Exception.class)
+    public void deleteRelationship(@Param("upnoteid") int upnoteid, @Param("id") int id);
 
 }
