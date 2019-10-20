@@ -4,6 +4,9 @@ import axios from "axios";
 import { red } from "@material-ui/core/colors";
 import './Note.css'
 import ReactMarkdown from 'react-markdown';
+import Select from 'react-select';
+
+
 
 // generage select dropdown option list dynamically
 function Options({ options }) {
@@ -54,14 +57,23 @@ class Note extends Component {
     const { id, author, content, rule, date, title, web, upnote, downnote, ruleIsLoading, rulenotes, handleDelete } = this.props;
     return (
       <Paper style={{ padding: 30, margin: 20 }}>
-        <select name="animal" value={this.state.value} onChange={this.handleSelect(id)}>
+        <select style={{ width:"80%"}} name="animal" value={this.state.value} onChange={this.handleSelect(id)}>
           <Options options={!ruleIsLoading ? rulenotes : []} />
-        </select>
+        </select> 
+        
         <ReactMarkdown escapeHtml= {false} source={content}/>
         {(Array.isArray(upnote) && upnote.length) > 0 &&
-          upnote.map(upnotea => <p>Can be explained by: {upnotea}</p>)}
+          upnote.map(upnotea => {
+            return(
+              <div>
+                <p>Can be explained by: {upnotea.content}</p>
+                {/* <button onClick={this.handleDeleteRelationship.bind(this, id)}>Delete relationship</button> */}
+              </div>
+        
+          )})
+        }
         {(Array.isArray(downnote) && downnote.length) > 0 &&
-          downnote.map(downnotea => <p>Related example: {downnotea}</p>)}
+          downnote.map(downnotea => <p>Related example: {downnotea.content}</p>)}
         <button onClick={handleDelete.bind(this, id)}>Delete</button>
         <button 
         className={this.state.rule?"buttonred":"buttongrey"}
