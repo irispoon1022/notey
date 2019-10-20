@@ -53,6 +53,14 @@ class Note extends Component {
       this.setState({value: event.target.value},()=>{axios.post(`http://localhost:8080/api/v1/notes/${id}/upnote/${this.state.value}`)})
     }
 
+    handleDeleteRelationship = (id, upnoteid) => {
+      // console.log({id, upnoteid})
+      axios.delete(`http://localhost:8080/api/v1/notes/${id}/upnote/${upnoteid}`).then(res => {
+        console.log(res);
+        console.log(res.data);
+      });
+    };
+
   render() {
     const { id, author, content, rule, date, title, web, upnote, downnote, ruleIsLoading, rulenotes, handleDelete } = this.props;
     return (
@@ -67,7 +75,7 @@ class Note extends Component {
             return(
               <div>
                 <p>Can be explained by: {upnotea.content}</p>
-                {/* <button onClick={this.handleDeleteRelationship.bind(this, id)}>Delete relationship</button> */}
+                <button onClick={this.handleDeleteRelationship.bind(this, id, upnotea.id)}>Delete relationship</button>
               </div>
         
           )})
