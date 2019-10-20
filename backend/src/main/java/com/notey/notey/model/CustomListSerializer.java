@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class CustomListSerializer extends StdSerializer<List<Note>> {
@@ -26,9 +27,14 @@ public class CustomListSerializer extends StdSerializer<List<Note>> {
             SerializerProvider provider)
             throws IOException, JsonProcessingException {
 
-        List<String> ids = new ArrayList<>();
+        List<HashMap> ids = new ArrayList<>();
+
+
+
         for (Note note : notes) {
-            ids.add(note.getContent());
+            HashMap idContent = new HashMap();
+            idContent.put(note.getId(),note.getContent());
+            ids.add(idContent);
         }
         generator.writeObject(ids);
     }

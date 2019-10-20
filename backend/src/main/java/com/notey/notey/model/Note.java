@@ -45,6 +45,12 @@ public class Note
     @JsonSerialize(using = CustomListSerializer.class)
     private List<Note> upnote;
 
+    @JoinTable(name = "note_tag", joinColumns = {
+            @JoinColumn(name = "note", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
+            @JoinColumn(name = "tag", referencedColumnName = "id", nullable = false)})
+    @ManyToMany
+    private List<Tag> tag;
+
     public int getId() {
         return id;
     }
@@ -125,6 +131,14 @@ public class Note
 
     public void setRule(Boolean rule) {
         this.rule = rule;
+    }
+
+    public List<Tag> getTag() {
+        return tag;
+    }
+
+    public void setTag(List<Tag> tag) {
+        this.tag = tag;
     }
 
 }
