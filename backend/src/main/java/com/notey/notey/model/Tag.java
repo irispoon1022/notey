@@ -23,6 +23,14 @@ public class Tag
     @JsonSerialize(using = CustomListSerializer.class)
     private List<Note> note;
 
+
+    @JoinTable(name = "tagup_tagdown", joinColumns = {
+            @JoinColumn(name = "tagup", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
+            @JoinColumn(name = "tagdown", referencedColumnName = "id", nullable = false)})
+    @ManyToMany
+    private List<Tag> tagdown;
+
+
     public int getId() {
         return id;
     }
@@ -41,5 +49,13 @@ public class Tag
 
     public void setNote(List<Note> note) {
         this.note = note;
+    }
+
+    public List<Tag> getTagdown() {
+        return tagdown;
+    }
+
+    public void setTagdown(List<Tag> tagdown) {
+        this.tagdown = tagdown;
     }
 }
