@@ -5,14 +5,18 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 import Note from "./Note/Note";
+import Chip from '@material-ui/core/Chip';
 
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     padding: theme.spacing(3, 2),
-//   },
-// }));
-
-// const classes = useStyles();
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(0.5),
+    },
+  },
+}));
 
 class App extends Component {
   constructor(props) {
@@ -58,13 +62,38 @@ class App extends Component {
   };
   handleMarkRule = id => {};
 
+  handleClick = (tagId,tags) => {
+    console.log(tagId,tags)
+
+      function a (tag) {
+        return (
+          tag.id === tagId
+        )
+      }
+      let noteIdList = tags.filter(a)[0].note.map(item=>item.id)
+      console.log(noteIdList)
+      const updatedData = 
+    this.state.data.filter(function matchId(datum){
+      return (
+        noteIdList.includes(datum.id)
+      )
+    })
+    this.setState({
+      data:updatedData
+    })
+  }
+s
+  
+
   render() {
     const { isLoading, data, rulenotes, ruleIsLoading,tags,tagIsLoading } = this.state;
-
+    const array=[1,2];
     return (
       <React.Fragment>
         <SearchAppBar />
-        {!tagIsLoading ? (tags.map (tag => <p>{tag.name}</p>)) : (<p>Tag is loading</p>)}
+        {!tagIsLoading ? (tags.map (tag => <Chip label={tag.name} onClick={this.handleClick.bind(this,tag.id,tags)}></Chip>)) : (<p>Tag is loading</p>)}
+        
+
         {!isLoading ? (
           data.map(datum => {
             const { id, author, content, rule, date, title, web, upnote, downnote, } = datum;
