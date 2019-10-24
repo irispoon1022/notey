@@ -4,9 +4,7 @@ import axios from "axios";
 import { red } from "@material-ui/core/colors";
 import './Note.css'
 import ReactMarkdown from 'react-markdown';
-import Select from 'react-select';
-
-
+import CreatableSelect from 'react-select/creatable';
 
 // generage select dropdown option list dynamically
 function Options({ options }) {
@@ -61,6 +59,13 @@ class Note extends Component {
       });
     };
 
+    handleChange = (newValue: any, actionMeta: any) => {
+      console.group('Value Changed');
+      console.log(newValue);
+      console.log(`action: ${actionMeta.action}`);
+      console.groupEnd();
+    };
+
   render() {
     const { id, author, content, rule, date, title, web, upnote, downnote, ruleIsLoading, rulenotes, handleDelete } = this.props;
     return (
@@ -68,6 +73,17 @@ class Note extends Component {
         <select style={{ width:"80%"}} name="animal" value={this.state.value} onChange={this.handleSelect(id)}>
           <Options options={!ruleIsLoading ? rulenotes : []} />
         </select> 
+        <CreatableSelect
+        isMulti
+        onChange={this.handleChange}
+        // options={colourOptions}
+        options= {!ruleIsLoading ? rulenotes.map (rulenote =>{
+          var emptyObj={};
+          emptyObj.value = rulenote.id;
+          emptyObj.label = rulenote.title;
+          return emptyObj;
+        }) : []}
+      />
         
         <ReactMarkdown escapeHtml= {false} source={content}/>
         {(Array.isArray(upnote) && upnote.length) > 0 &&
