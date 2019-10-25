@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import Paper from "@material-ui/core/Paper";
 import axios from "axios";
-import { red } from "@material-ui/core/colors";
 import "./Note.css";
 import ReactMarkdown from "react-markdown";
 import CreatableSelect from "react-select/creatable";
-import Select from "react-select";
 import Button from "@material-ui/core/Button";
+import FormDialog from "../FormDialog/FormDialog";
 
 // generage select dropdown option list dynamically
 function Options({ options }) {
@@ -119,14 +118,6 @@ class Note extends Component {
     } = this.props;
     return (
       <Paper style={{ padding: 30, margin: 20 }}>
-        {/* <select
-          style={{ width: "80%" }}
-          name="animal"
-          value={this.state.value}
-          onChange={this.handleSelect(id)}
-        >
-          <Options options={!ruleIsLoading ? rulenotes : []} />
-        </select> */}
         <div style={{"padding-bottom":"20px"}}>
           <div style={{ width: "90%", float: "left" }}>
             <CreatableSelect
@@ -192,6 +183,8 @@ class Note extends Component {
         >
           Mark as Rule
         </button>
+        {/* <button onClick={handleClickOpen.bind(this, id)}>Edit</button> */}
+        <FormDialog></FormDialog>
       </Paper>
     );
   }
