@@ -6,6 +6,11 @@ import ReactMarkdown from "react-markdown";
 import CreatableSelect from "react-select/creatable";
 import Button from "@material-ui/core/Button";
 import FormDialog from "../FormDialog/FormDialog";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteOutlineRoundedIcon from "@material-ui/icons/DeleteOutlineRounded";
+
+import StarBorderRoundedIcon from "@material-ui/icons/StarBorderRounded";
+import StarRoundedIcon from "@material-ui/icons/StarRounded";
 
 // generage select dropdown option list dynamically
 function Options({ options }) {
@@ -119,7 +124,7 @@ class Note extends Component {
     } = this.props;
     return (
       <Paper style={{ padding: 30, margin: 20 }}>
-        <div style={{"padding-bottom":"20px"}}>
+        <div style={{ "padding-bottom": "20px" }}>
           <div style={{ width: "90%", float: "left" }}>
             <CreatableSelect
               isMulti
@@ -138,27 +143,32 @@ class Note extends Component {
               }
             />
           </div>
-          <Button variant="outlined" onClick={this.handleClick.bind(this, id)} style={{ "margin-left": "10px"}}>
+          <Button
+            variant="outlined"
+            onClick={this.handleClick.bind(this, id)}
+            style={{ "margin-left": "10px" }}
+          >
             Submit
           </Button>
         </div>
         <ReactMarkdown escapeHtml={false} source={content} />
+        <span>{`${book == null? '':book} ${author == null ? '':author}`}</span>
         {(Array.isArray(upnote) && upnote.length) > 0 &&
           upnote.map(upnotea => {
             return (
               <div>
-                <p>Can be explained by: {upnotea.content}</p>
-
-                <Button
-                  variant="outlined"
+                <div style={{width:"90%" ,float:"left"}}>Can be explained by: {upnotea.content}</div>
+                <IconButton
+                  aria-label="delete"
+                  style={{"padding-top":0}}
                   onClick={this.handleDeleteRelationship.bind(
                     this,
                     id,
                     upnotea.id
                   )}
                 >
-                  Delete
-                </Button>
+                  <DeleteOutlineRoundedIcon />
+                </IconButton>
               </div>
             );
           })}
@@ -166,9 +176,12 @@ class Note extends Component {
           downnote.map(downnotea => (
             <p>Related example: {downnotea.content}</p>
           ))}
-        <button onClick={handleDelete.bind(this, id)}>Delete</button>
-        <button
-          className={this.state.rule ? "buttonred" : "buttongrey"}
+        <IconButton aria-label="delete" onClick={handleDelete.bind(this, id)}>
+          <DeleteOutlineRoundedIcon />
+        </IconButton>
+
+        <IconButton
+          aria-label="star"
           onClick={this.handleMarkRule.bind(
             this,
             id,
@@ -182,10 +195,17 @@ class Note extends Component {
             downnote
           )}
         >
-          Mark as Rule
-        </button>
-        {/* <button onClick={handleClickOpen.bind(this, id)}>Edit</button> */}
-        <FormDialog id={id} content={content} author={author} date={date} title={title} web={web} book={book}></FormDialog>
+          {this.state.rule ? <StarRoundedIcon /> : <StarBorderRoundedIcon />}
+        </IconButton>
+        <FormDialog
+          id={id}
+          content={content}
+          author={author}
+          date={date}
+          title={title}
+          web={web}
+          book={book}
+        ></FormDialog>
       </Paper>
     );
   }
