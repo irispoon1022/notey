@@ -68,15 +68,6 @@ class Note extends Component {
     );
   };
 
-  // handleSelect = id => event => {
-  //   // this.setState({value: event.target.value},()=>{console.log(this.state.value,id)})
-  //   this.setState({ value: event.target.value }, () => {
-  //     axios.post(
-  //       `http://localhost:8080/api/v1/notes/${id}/upnote/${this.state.value}`
-  //     );
-  //   });
-  // };
-
   handleDeleteRelationship = (id, upnoteid) => {
     // console.log({id, upnoteid})
     axios

@@ -55,10 +55,21 @@ class App extends Component {
 
   }
   handleDelete = id => {
-    axios.delete(`http://localhost:8080/api/v1/notes/${id}`).then(res => {
-      console.log(res);
-      console.log(res.data);
-    });
+    
+    const updatedData = 
+    this.state.data.filter(function isNotId(datum){
+      return (
+        datum.id !==id
+      )
+    })
+
+    this.setState({
+      data:updatedData
+    })
+
+    axios.delete(`http://localhost:8080/api/v1/notes/${id}`).then(
+
+    );
   };
   handleMarkRule = id => {};
 
