@@ -96,7 +96,7 @@ s
 
         {!isLoading ? (
           data.map(datum => {
-            const { id, author, content, rule, date, title, web, upnote, downnote, } = datum;
+            const { id, author, content, rule, date, title, web, book, upnote, downnote, } = datum;
 
             return (
               <div key={id}>
@@ -108,6 +108,7 @@ s
                   date={date}
                   title={title}
                   web={web}
+                  book={book}
                   upnote={upnote}
                   downnote={downnote}
                   ruleIsLoading={ruleIsLoading}

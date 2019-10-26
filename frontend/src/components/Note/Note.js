@@ -109,6 +109,7 @@ class Note extends Component {
       date,
       title,
       web,
+      book,
       upnote,
       downnote,
       ruleIsLoading,
@@ -184,7 +185,7 @@ class Note extends Component {
           Mark as Rule
         </button>
         {/* <button onClick={handleClickOpen.bind(this, id)}>Edit</button> */}
-        <FormDialog></FormDialog>
+        <FormDialog id={id} content={content} author={author} date={date} title={title} web={web} book={book}></FormDialog>
       </Paper>
     );
   }
