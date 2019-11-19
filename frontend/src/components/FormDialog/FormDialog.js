@@ -31,6 +31,7 @@ export default function FormDialog(props) {
     };
     console.log(a)
     axios.put(`http://localhost:8080/api/v1/notes/${props.id}`, a);
+    props.handleEdit (a.author,a.content,a.date,a.title,a.web,a.book);
   };
   const [values, setValues] = React.useState({
   });

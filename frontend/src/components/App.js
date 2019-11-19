@@ -124,7 +124,7 @@ s
                   downnote={downnote}
                   ruleIsLoading={ruleIsLoading}
                   rulenotes={rulenotes}
-
+                  onRefresh={this.handleRefreshCard}
                   handleDelete={this.handleDelete}
                 />
               </div>

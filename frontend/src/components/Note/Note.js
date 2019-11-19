@@ -30,13 +30,21 @@ class Note extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rule: props.rule,
-      value: props.upnote
+      rule: this.props.rule,
+      value: this.props.upnote,
+      author:this.props.author,
+      content:this.props.content,
+      date:this.props.date,
+      title:this.props.title,
+      web:this.props.web,
+      book:this.props.book,
     };
     this.handleCLick = this.handleClick.bind(this);
+    this.handleEditRefresh=this.handleEditRefresh.bind(this);
+
   }
 
-  handleMarkRule = (
+  handleMarkRule (
     id,
     author,
     content,
@@ -46,7 +54,7 @@ class Note extends Component {
     web,
     upnote,
     downnote
-  ) => {
+  ) {
     this.setState(
       prevState => ({
         rule: !prevState.rule
@@ -66,9 +74,9 @@ class Note extends Component {
         axios.put(`http://localhost:8080/api/v1/notes/${id}`, a);
       }
     );
-  };
+  }
 
-  handleDeleteRelationship = (id, upnoteid) => {
+  handleDeleteRelationship(id, upnoteid) {
     // console.log({id, upnoteid})
     axios
       .delete(`http://localhost:8080/api/v1/notes/${id}/upnote/${upnoteid}`)
@@ -76,9 +84,9 @@ class Note extends Component {
         console.log(res);
         console.log(res.data);
       });
-  };
+  }
 
-  handleChange = (newValue: any, actionMeta: any) => {
+  handleChange(newValue, actionMeta) {
     console.group("Value Changed");
     console.log(newValue);
     console.log(`action: ${actionMeta.action}`);
@@ -86,33 +94,39 @@ class Note extends Component {
     this.setState({
       value: newValue
     });
-  };
-  handleClick = id => {
+  }
+
+  handleClick(id,onRefresh) {
     this.state.value.forEach(valueElement => {
       console.log(id, valueElement.value);
       axios.post(
         `http://localhost:8080/api/v1/notes/${id}/upnote/${valueElement.value}`
-      );
+      )
+      // .then ({onRefresh(id)})
     });
-  };
+  }
+
+  handleEditRefresh(author,
+    content,
+    date,
+    title,
+    web,
+    book) {
+    this.setState({author,content,date,title,web,book});
+  }
+
 
   render() {
     const {
       id,
-      author,
-      content,
-      rule,
-      date,
-      title,
-      web,
-      book,
       upnote,
       downnote,
       ruleIsLoading,
       rulenotes,
       handleDelete,
-      value
     } = this.props;
+
+    const {rule,value,author,content,date,title,web,book}=this.state;
     return (
       <Paper style={{ padding: 30, margin: 20 }}>
         <div style={{ "padding-bottom": "20px" }}>
@@ -143,7 +157,7 @@ class Note extends Component {
           </Button>
         </div>
         <ReactMarkdown escapeHtml={false} source={content} />
-        <span>{`${book == null? '':book} ${author == null ? '':author}`}</span>
+        <span>{`${book == null? '':book} ${author == null ? '':this.state.author}`}</span>
         {(Array.isArray(upnote) && upnote.length) > 0 &&
           upnote.map(upnotea => {
             return (
@@ -196,6 +210,7 @@ class Note extends Component {
           title={title}
           web={web}
           book={book}
+          handleEdit={this.handleEditRefresh}
         ></FormDialog>
       </Paper>
     );
