@@ -12,6 +12,8 @@ import DeleteOutlineRoundedIcon from "@material-ui/icons/DeleteOutlineRounded";
 import StarBorderRoundedIcon from "@material-ui/icons/StarBorderRounded";
 import StarRoundedIcon from "@material-ui/icons/StarRounded";
 
+import Grid from '@material-ui/core/Grid';
+
 // generage select dropdown option list dynamically
 function Options({ options }) {
   return options.map(option => (
@@ -128,7 +130,13 @@ class Note extends Component {
 
     const {rule,value,author,content,date,title,web,book}=this.state;
     return (
-      <Paper style={{ padding: 30, margin: 20 }}>
+      <Grid
+    container
+    spacing={0}
+    alignItems="center"
+    direction="column">
+      <Grid item xs={12} sm={6} >
+      <Paper style={{ padding: 30, margin: '20px',width:"680px"}}>
         <div style={{ "padding-bottom": "20px" }}>
           <div style={{ width: "90%", float: "left" }}>
             <CreatableSelect
@@ -213,6 +221,8 @@ class Note extends Component {
           handleEdit={this.handleEditRefresh}
         ></FormDialog>
       </Paper>
+      </Grid>
+      </Grid>
     );
   }
 }
