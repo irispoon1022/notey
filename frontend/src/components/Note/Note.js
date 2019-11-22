@@ -164,8 +164,8 @@ class Note extends Component {
             Submit
           </Button>
         </div>
-        <ReactMarkdown escapeHtml={false} source={content} />
-        <span>{`${book == null? '':book} ${author == null ? '':this.state.author}`}</span>
+        <ReactMarkdown escapeHtml={false} source={content} className="note"/>
+        <span className="author">{`${author == null ? '':this.state.author} ${book == null? '':` in ${book} `}`}</span>
         {(Array.isArray(upnote) && upnote.length) > 0 &&
           upnote.map(upnotea => {
             return (

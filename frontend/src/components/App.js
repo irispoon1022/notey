@@ -103,7 +103,8 @@ s
     return (
       <React.Fragment>
         <SearchAppBar />
-        {!tagIsLoading ? (tags.map (tag => <Chip label={tag.name} onClick={this.handleClick.bind(this,tag.id,tags)}></Chip>)) : (<p>Tag is loading</p>)}
+        <div style={{padding:"16px" ,backgroundColor:"#F9FCFF"}}>
+    {<span>Tags:</span>}{!tagIsLoading ? (tags.map (tag => <Chip style={{margin:"8px"}}label={tag.name} onClick={this.handleClick.bind(this,tag.id,tags)}></Chip>)) : (<p>Tag is loading</p>)}
         
         {data.map(datum => {
 
@@ -132,7 +133,7 @@ s
               </LazyLoad>
             );
           })}
-
+        </div>
       </React.Fragment>
     );
   }
