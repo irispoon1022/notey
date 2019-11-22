@@ -6,6 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 import Note from "./Note/Note";
 import Chip from '@material-ui/core/Chip';
+import LazyLoad from 'react-lazyload';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -104,12 +105,12 @@ s
         <SearchAppBar />
         {!tagIsLoading ? (tags.map (tag => <Chip label={tag.name} onClick={this.handleClick.bind(this,tag.id,tags)}></Chip>)) : (<p>Tag is loading</p>)}
         
+        {data.map(datum => {
 
-        {!isLoading ? (
-          data.map(datum => {
             const { id, author, content, rule, date, title, web, book, upnote, downnote, } = datum;
 
             return (
+              <LazyLoad key={id} placeholder={<p>loading</p>}>
               <div key={id}>
                 <Note
                   id={id}
@@ -128,12 +129,10 @@ s
                   handleDelete={this.handleDelete}
                 />
               </div>
+              </LazyLoad>
             );
-          })
-        ) : (
-          // If there is a delay in data, let's let the user know it's loading
-          <h3>Loading...</h3>
-        )}
+          })}
+
       </React.Fragment>
     );
   }
