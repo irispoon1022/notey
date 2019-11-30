@@ -28,7 +28,8 @@ class App extends Component {
       ruleIsLoading: true,
       rulenotes: [],
       tagIsLoading: true,
-      tags: []
+      tags: [],
+      filtered:false,
     };
   }
 
@@ -69,6 +70,7 @@ class App extends Component {
   handleMarkRule = id => {};
 
   handleClickTag = (tagId, tags) => {
+    this.setState(prevState => ({filtered:!prevState.filtered}))
     console.log(tagId, tags);
 
     function a(tag) {
@@ -80,8 +82,9 @@ class App extends Component {
       return noteIdList.includes(datum.id);
     });
     this.setState({
-      data: updatedData
-    });
+      data: updatedData,
+      filtered:true
+    })
   };
 
 
@@ -111,44 +114,28 @@ class App extends Component {
           ) : (
             <p>Tag is loading</p>
           )}
-
-          {data.map(datum => {
-            const {
-              id,
-              author,
-              content,
-              rule,
-              date,
-              title,
-              web,
-              book,
-              upnote,
-              downnote
-            } = datum;
-
-            return (
+        {/* {this.state.filtered? ([]): ( )} */}
+          {data.map(datum => 
               // <LazyLoad key={id} placeholder={<p>loading</p>}>
-                <div key={id}>
                   <Note
-                    id={id}
-                    author={author}
-                    content={content}
-                    rule={rule}
-                    date={date}
-                    title={title}
-                    web={web}
-                    book={book}
-                    upnote={upnote}
-                    downnote={downnote}
+                    key={datum.id}
+                    id={datum.id}
+                    author={datum.author}
+                    content={datum.content}
+                    rule={datum.rule}
+                    date={datum.date}
+                    title={datum.title}
+                    web={datum.web}
+                    book={datum.book}
+                    upnote={datum.upnote}
+                    downnote={datum.downnote}
                     ruleIsLoading={ruleIsLoading}
                     rulenotes={rulenotes}
                     onRefresh={this.handleRefreshCard}
                     handleDelete={this.handleDelete}
                   />
-                </div>
               // </LazyLoad>
-            );
-          })}
+          )}
         </div>
       </React.Fragment>
     );
