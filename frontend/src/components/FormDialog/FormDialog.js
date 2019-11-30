@@ -16,6 +16,10 @@ export default function FormDialog(props) {
   const handleClickOpen = () => {
     setOpen(true);
   };
+  
+  const handleCancel = () => {
+    setOpen(false);
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -111,7 +115,7 @@ export default function FormDialog(props) {
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleCancel} color="primary">
             Cancel
           </Button>
           <Button onClick={handleClose} color="primary">
