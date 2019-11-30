@@ -19,6 +19,7 @@ export default function FormDialog(props) {
 
   const handleClose = () => {
     setOpen(false);
+    props.setLoading();
     
     const a = {
       id: props.id,
@@ -30,8 +31,8 @@ export default function FormDialog(props) {
       book: values.book || props.book
     };
     console.log(a)
-    axios.put(`http://localhost:8080/api/v1/notes/${props.id}`, a);
-    props.handleEdit (a.author,a.content,a.date,a.title,a.web,a.book);
+    axios.put(`http://localhost:8080/api/v1/notes/${props.id}`, a)
+    .then(() => {props.handleNoteRefresh(props.id)})
   };
   const [values, setValues] = React.useState({
   });
