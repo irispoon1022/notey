@@ -70,21 +70,30 @@ class App extends Component {
   handleMarkRule = id => {};
 
   handleClickTag = (tagId, tags) => {
-    this.setState(prevState => ({filtered:!prevState.filtered}))
-    console.log(tagId, tags);
+    if (this.state.filtered === true) {
+      axios
+      .get("http://localhost:8080/api/v1/notes")
+      .then(response => {
+        this.setState({ data: response.data, filtered: false });
+      })
+      .catch(error => console.log(error));
+    } else {
+      console.log(tagId, tags);
 
-    function a(tag) {
-      return tag.id === tagId;
+      function a(tag) {
+        return tag.id === tagId;
+      }
+      let noteIdList = tags.filter(a)[0].note.map(item => item.id);
+      console.log(noteIdList);
+      const updatedData = this.state.data.filter(function matchId(datum) {
+        return noteIdList.includes(datum.id);
+      });
+      this.setState({
+        data: updatedData,
+        filtered:true
+      })
     }
-    let noteIdList = tags.filter(a)[0].note.map(item => item.id);
-    console.log(noteIdList);
-    const updatedData = this.state.data.filter(function matchId(datum) {
-      return noteIdList.includes(datum.id);
-    });
-    this.setState({
-      data: updatedData,
-      filtered:true
-    })
+
   };
 
 
@@ -114,7 +123,6 @@ class App extends Component {
           ) : (
             <p>Tag is loading</p>
           )}
-        {/* {this.state.filtered? ([]): ( )} */}
           {data.map(datum => 
               // <LazyLoad key={id} placeholder={<p>loading</p>}>
                   <Note
