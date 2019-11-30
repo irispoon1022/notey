@@ -68,7 +68,7 @@ class App extends Component {
   };
   handleMarkRule = id => {};
 
-  handleClick = (tagId, tags) => {
+  handleClickTag = (tagId, tags) => {
     console.log(tagId, tags);
 
     function a(tag) {
@@ -105,7 +105,7 @@ class App extends Component {
               <Chip
                 style={{ margin: "8px" }}
                 label={tag.name}
-                onClick={() => {this.handleClick(tag.id, tags)}}
+                onClick={() => {this.handleClickTag(tag.id, tags)}}
               ></Chip>
             ))
           ) : (
@@ -127,7 +127,7 @@ class App extends Component {
             } = datum;
 
             return (
-              <LazyLoad key={id} placeholder={<p>loading</p>}>
+              // <LazyLoad key={id} placeholder={<p>loading</p>}>
                 <div key={id}>
                   <Note
                     id={id}
@@ -146,7 +146,7 @@ class App extends Component {
                     handleDelete={this.handleDelete}
                   />
                 </div>
-              </LazyLoad>
+              // </LazyLoad>
             );
           })}
         </div>
