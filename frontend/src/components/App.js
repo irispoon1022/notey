@@ -106,7 +106,7 @@ class App extends Component {
       tags,
       tagIsLoading
     } = this.state;
-    const array = [1, 2];
+
     return (
       <React.Fragment>
         <SearchAppBar />

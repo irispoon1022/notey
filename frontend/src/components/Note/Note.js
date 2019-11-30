@@ -144,14 +144,14 @@ class Note extends Component {
     return (
       <Grid container spacing={0} alignItems="center" direction="column">
         <Grid item xs={12} sm={6}>
-          <Paper style={{ padding: 30, margin: "20px", width: "680px" }}>
+          <Paper style={{ padding: 40, margin: "20px", width: "680px" }}>
           {this.state.isLoading? <p>loading</p>: (
             <div>
-            <div style={{ "padding-bottom": "20px" }}>
+            <div style={{ "padding-bottom": "20px" ,display:"flex"}}>
+              <div style={{width:"80%"}}>
                 <CreatableSelect
-                  style={{ width: "90%", float: "left" }}
                   isMulti
-                  defaultValue={{ value: 1, label: "hi" }}
+                  placeholder="Connect this note to other notes..."
                   onChange={this.handleChange}
                   value={this.state.value}
                   options={
@@ -165,12 +165,13 @@ class Note extends Component {
                       : []
                   }
                 />
+                </div>
               <Button
+                style={{ "margin-left": "10px" }} 
                 variant="outlined"
                 onClick={() => {
                   this.handleClick(id);
                 }}
-                style={{ "margin-left": "10px" }}
               >
                 Submit
               </Button>
