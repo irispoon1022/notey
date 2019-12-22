@@ -14,9 +14,6 @@ import StarRoundedIcon from "@material-ui/icons/StarRounded";
 
 import Grid from "@material-ui/core/Grid";
 
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
-
 // generage select dropdown option list dynamically
 function Options({ options }) {
   return options.map(option => (
