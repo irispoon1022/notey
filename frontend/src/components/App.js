@@ -7,8 +7,7 @@ import axios from "axios";
 import Note from "./Note/Note";
 import Chip from "@material-ui/core/Chip";
 import LazyLoad from "react-lazyload";
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+import AddNoteModal from "./AddNoteModal/AddNoteModal";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -147,9 +146,7 @@ class App extends Component {
               // </LazyLoad>
           )}
         </div>
-        <Fab color="primary" aria-label="add" style={{position:"fixed", bottom:"24px", right:"24px"}}>
-        <AddIcon />
-      </Fab>
+          <AddNoteModal />
       </React.Fragment>
     );
   }
